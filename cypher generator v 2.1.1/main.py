@@ -182,6 +182,9 @@ def export_file():
 window = Tk()
 window.title('Foxy Encryptor')
 
+icon = PhotoImage(file='Foxy Encryption Logo.png')
+window.iconphoto(True, icon)
+
 style = ttk.Style()
 style.theme_use('clam')
 
