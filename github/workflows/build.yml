@@ -1,1 +1,50 @@
+name: Build Cypher Generator Executables
 
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allows manual triggers from GitHub Actions UI
+
+jobs:
+  build:
+    name: Build Executable on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: cypher-generator-windows
+            executable_path: dist/main.exe
+          - os: ubuntu-latest
+            artifact_name: cypher-generator-linux
+            executable_path: dist/main
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Build with PyInstaller
+        shell: bash
+        run: |
+          # PyInstaller automatically scans and bundles lettergen.py and lettergendbg.py from main.py
+          pyinstaller --onefile "Guess what this code does v 2/main.py"
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.executable_path }}
