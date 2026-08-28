@@ -2,9 +2,10 @@ name: Build Executable
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -33,3 +34,20 @@ jobs:
         with:
           name: cypher-generator-windows
           path: dist/main
+
+
+5. Click **Commit changes...** at the top right.
+6. Select **Commit directly to the `main` branch** (or `master`) and click **Commit changes**.
+
+---
+
+## 🔍 Key Configuration Features
+
+* **Multi-Branch Support**: Triggers builds on pushes to both `main` and `master` branches so actions run regardless of default branch naming.
+* **Manual Run Trigger (`workflow_dispatch`)**: Adds a "Run workflow" button under your **Actions** tab to manually trigger builds without needing a new commit.
+* **Subfolder & Space Resolution**: Uses `--paths="cypher generator v 2.1.1"` and quoted entry points so PyInstaller correctly parses folder names with spaces.
+* **Hidden Import Integration**: Passes `--hidden-import=lettergen` to ensure `lettergen.py` is bundled alongside `main.py`.
+* **Artifact Upload**: Packages the output directory (`dist/main`) into a downloadable ZIP archive via `actions/upload-artifact@v4`.
+```eof
+
+The document in the editor has been updated with the complete `.github/workflows/build.yml` code and instructions. You can copy this workflow file directly into your repository to ensure your builds run and compile cleanly.
