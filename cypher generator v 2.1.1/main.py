@@ -1,7 +1,18 @@
 import lettergen
 from tkinter import *
 from tkinter import ttk, filedialog
+import os
+import sys
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 is_fullscreen = False
 
 letter_slot_1, letter_slot_2, letter_slot_3, letter_slot_4, letter_slot_5, letter_slot_6, letter_slot_7, letter_slot_8, letter_slot_9, letter_slot_10, letter_slot_11, letter_slot_12, letter_slot_13, letter_slot_14, letter_slot_15, letter_slot_16, letter_slot_17, letter_slot_18, letter_slot_19, letter_slot_20, letter_slot_21, letter_slot_22, letter_slot_23, letter_slot_24, letter_slot_25, letter_slot_26, letter_slot_27, letter_slot_28, letter_slot_29, letter_slot_30, letter_slot_31, letter_slot_32, letter_slot_33, letter_slot_34, letter_slot_35, letter_slot_36, symbol_slot_1, symbol_slot_2, symbol_slot_3, symbol_slot_4, symbol_slot_5, symbol_slot_6, symbol_slot_7, symbol_slot_8, symbol_slot_9, symbol_slot_10, symbol_slot_11, symbol_slot_12, symbol_slot_13, symbol_slot_14, symbol_slot_15, symbol_slot_16, symbol_slot_17, symbol_slot_18, symbol_slot_19, symbol_slot_20, symbol_slot_21, symbol_slot_22, symbol_slot_23, symbol_slot_24, symbol_slot_25, symbol_slot_26, symbol_slot_27, symbol_slot_28, symbol_slot_29, symbol_slot_30, symbol_slot_31, symbol_slot_32, symbol_slot_33, symbol_slot_34, symbol_slot_35, symbol_slot_36 = [lettergen.no_value() for _ in range(72)]
