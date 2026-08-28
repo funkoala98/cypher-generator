@@ -26,4 +26,10 @@ jobs:
 
       - name: Build with PyInstaller
         run: |
-          pyinstaller --noconfirm --onedir --windowed --hidden-import=main2 main.py${{ matrix.executable_path }}
+          pyinstaller --noconfirm --onedir --windowed --paths="cypher generator v 2.1.1" --hidden-import=lettergen "cypher generator v 2.1.1/main.py"
+
+      - name: Upload Executable Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypher-generator-windows
+          path: dist/main
