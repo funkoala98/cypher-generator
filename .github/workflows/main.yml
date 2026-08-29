@@ -54,4 +54,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.artifact_name }}
-        path: "cypher generator v 2.1.1/dist/CypherGenerator${{ matrix.executable_extension }}"
+        path: "cypher generator/dist/CypherGenerator${{ matrix.executable_extension }}"
