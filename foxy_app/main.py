@@ -98,6 +98,18 @@ ui.add_head_html("""
         }
         .q-btn {
             text-transform: none !important;
+            min-height: 0 !important;
+        }
+        .square-plus-btn {
+            width: 48px !important;
+            height: 48px !important;
+            min-width: 48px !important;
+            min-height: 48px !important;
+            max-width: 48px !important;
+            max-height: 48px !important;
+            padding: 0 !important;
+            font-size: 2rem !important;
+            line-height: 1 !important;
         }
     </style>
 """)
@@ -138,7 +150,7 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
             "w-full h-64 border border-[#7b2a19] bg-[#f7d3a3] text-[#7b2a19] p-2 text-2xl leading-tight"
         )
 
-        # Hidden standard uploader element
+        # Hidden uploader component
         uploader = ui.upload(
             on_upload=lambda e: setattr(
                 text_area, "value", e.content.read().decode("utf-8")
@@ -150,14 +162,14 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
             ui.download(text_area.value.encode("utf-8"), "cypher_export.txt")
 
         with ui.row().classes("mt-4 gap-4 items-center"):
-            # Clean '+' button triggering the file selector directly
+            # Fixed dimension square "+" button
             ui.button(
                 "+",
                 on_click=lambda: ui.run_javascript(
                     f'document.querySelector("#{uploader.html_id} input").click()'
                 ),
             ).classes(
-                "bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold h-12 w-12 text-3xl shadow-none p-0 flex items-center justify-center"
+                "square-plus-btn bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold shadow-none"
             ).props(
                 "flat"
             )
