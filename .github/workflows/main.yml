@@ -27,7 +27,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: "cypher generator v 2.1.1"
+        working-directory: "cypher generator"
 
     steps:
     - name: Checkout repository
