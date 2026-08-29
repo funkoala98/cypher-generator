@@ -47,7 +47,10 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        pyinstaller --onefile --clean --add-data "Foxy Encryption Logo.png${{ matrix.path_sep }}." --name "CypherGenerator" main.py
+        pyinstaller --onefile --clean \
+          --add-data "Foxy Encryption Logo.png${{ matrix.path_sep }}." \
+          --add-data "Tangerine-Bold.ttf${{ matrix.path_sep }}." \
+          --name "CypherGenerator" main.py
       shell: bash
 
     - name: Upload Artifact
