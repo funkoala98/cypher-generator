@@ -94,26 +94,6 @@ ui.add_head_html("""
             background-color: #ebd0ab !important;
         }
         .q-uploader {
-            background-color: #f7d3a3 !important;
-            color: #7b2a19 !important;
-            border: 1px solid #7b2a19 !important;
-            border-radius: 4px !important;
-            min-height: unset !important;
-            height: 48px !important;
-            width: 48px !important;
-            overflow: hidden !important;
-        }
-        .q-uploader__header {
-            background-color: #f7d3a3 !important;
-            width: 100% !important;
-            height: 100% !important;
-            padding: 0 !important;
-        }
-        .q-uploader__header-content {
-            padding: 0 !important;
-            justify-content: center !important;
-        }
-        .q-uploader__title, .q-uploader__subtitle, .q-uploader__list {
             display: none !important;
         }
         .q-btn {
@@ -158,17 +138,28 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
             "w-full h-64 border border-[#7b2a19] bg-[#f7d3a3] text-[#7b2a19] p-2 text-2xl leading-tight"
         )
 
-        def handle_upload(e: events.UploadEventArguments):
-            text_area.value = e.content.read().decode("utf-8")
+        # Hidden standard uploader element
+        uploader = ui.upload(
+            on_upload=lambda e: setattr(
+                text_area, "value", e.content.read().decode("utf-8")
+            ),
+            auto_upload=True,
+        ).classes("hidden")
 
         def trigger_download():
             ui.download(text_area.value.encode("utf-8"), "cypher_export.txt")
 
         with ui.row().classes("mt-4 gap-4 items-center"):
-            ui.upload(
-                on_upload=handle_upload, auto_upload=True
-            ).props('flat bordered icon="add"').classes(
-                "bg-[#f7d3a3] text-[#7b2a19]"
+            # Clean '+' button triggering the file selector directly
+            ui.button(
+                "+",
+                on_click=lambda: ui.run_javascript(
+                    f'document.querySelector("#{uploader.html_id} input").click()'
+                ),
+            ).classes(
+                "bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold h-12 w-12 text-3xl shadow-none p-0 flex items-center justify-center"
+            ).props(
+                "flat"
             )
 
             ui.button("Export File", on_click=trigger_download).classes(
