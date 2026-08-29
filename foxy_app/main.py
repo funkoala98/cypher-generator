@@ -35,7 +35,7 @@ def generate_grid_data():
 # Set Quasar theme primary color
 ui.colors(primary="#7b2a19")
 
-# Define local font using exact local path endpoint
+# Define local font and layout CSS rules
 ui.add_head_html("""
     <style>
         @font-face {
@@ -54,6 +54,32 @@ ui.add_head_html("""
             margin: 0;
             padding: 15px;
         }
+        .cypher-grid {
+            display: grid !important;
+            grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+            gap: 4px !important;
+            width: 100% !important;
+            max-width: 900px !important;
+            margin: 0 auto !important;
+            border: 2px solid #7b2a19 !important;
+            padding: 4px !important;
+            background-color: #7b2a19 !important;
+        }
+        .cypher-cell {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: 1px solid #7b2a19 !important;
+            background-color: #f7d3a3 !important;
+            color: #7b2a19 !important;
+            height: 70px !important;
+            text-align: center !important;
+            font-size: 2.2rem !important;
+            font-weight: bold !important;
+            line-height: 1 !important;
+            overflow: hidden !important;
+            padding: 2px !important;
+        }
         .q-uploader, .q-uploader__header, .q-uploader__list {
             background-color: #f7d3a3 !important;
             color: #7b2a19 !important;
@@ -61,7 +87,7 @@ ui.add_head_html("""
         }
         .q-uploader__title, .q-uploader__subtitle, .q-icon {
             color: #7b2a19 !important;
-            font-size: 2rem !important;
+            font-size: 1.8rem !important;
         }
         .q-btn {
             text-transform: none !important;
@@ -71,17 +97,15 @@ ui.add_head_html("""
 
 # Tab Navigation Header
 with ui.tabs().classes("w-full bg-[#f7d3a3] text-[#7b2a19]") as tabs:
-    tab1 = ui.tab("Create Cypher").classes("text-4xl font-bold")
-    tab2 = ui.tab("Import / Export").classes("text-4xl font-bold")
+    tab1 = ui.tab("Create Cypher").classes("text-3xl font-bold")
+    tab2 = ui.tab("Import / Export").classes("text-3xl font-bold")
 
 # Main Container Panels
 with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
 
     # --- TAB 1: CYPHER GRID ---
     with ui.tab_panel(tab1):
-        grid_container = ui.element("div").classes(
-            "grid grid-cols-7 gap-1 w-full max-w-5xl mx-auto border border-[#7b2a19] p-1 bg-[#7b2a19]"
-        )
+        grid_container = ui.element("div").classes("cypher-grid")
 
         def render_grid():
             grid_container.clear()
@@ -92,13 +116,11 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
                         if r_idx == 0 and c_idx == 0:
                             ui.button(
                                 "Regenerate", on_click=render_grid
-                            ).classes(
-                                "w-full h-20 bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold text-3xl shadow-none overflow-hidden p-0"
-                            ).props("flat")
-                        else:
-                            ui.label(val).classes(
-                                "flex items-center justify-center border border-[#7b2a19] bg-[#f7d3a3] text-[#7b2a19] h-20 text-center text-4xl font-bold leading-none overflow-hidden p-1"
+                            ).classes("cypher-cell text-xl shadow-none").props(
+                                "flat"
                             )
+                        else:
+                            ui.label(val).classes("cypher-cell")
 
         render_grid()
 
@@ -107,7 +129,7 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
         text_area = ui.textarea(
             placeholder="Imported file content will appear here..."
         ).classes(
-            "w-full h-64 border border-[#7b2a19] bg-[#f7d3a3] text-[#7b2a19] p-2 text-3xl leading-tight"
+            "w-full h-64 border border-[#7b2a19] bg-[#f7d3a3] text-[#7b2a19] p-2 text-2xl leading-tight"
         )
 
         def handle_upload(e: events.UploadEventArguments):
@@ -119,10 +141,10 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
         with ui.row().classes("mt-4 gap-4 items-center"):
             ui.upload(
                 on_upload=handle_upload, auto_upload=True, label="Import File"
-            ).classes("bg-[#f7d3a3] text-[#7b2a19] text-3xl")
+            ).classes("bg-[#f7d3a3] text-[#7b2a19] text-xl")
 
             ui.button("Export File", on_click=trigger_download).classes(
-                "bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold h-14 px-6 text-3xl shadow-none"
+                "bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold h-12 px-4 text-xl shadow-none"
             ).props("flat")
 
 # Server execution
