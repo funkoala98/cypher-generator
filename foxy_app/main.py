@@ -54,31 +54,35 @@ ui.add_head_html("""
             margin: 0;
             padding: 15px;
         }
+        .q-tab-panel {
+            padding: 0 !important;
+        }
         .cypher-grid {
             display: grid !important;
-            grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+            grid-template-columns: repeat(7, 1fr) !important;
+            grid-template-rows: repeat(7, 70px) !important;
             gap: 4px !important;
             width: 100% !important;
             max-width: 900px !important;
             margin: 0 auto !important;
-            border: 2px solid #7b2a19 !important;
-            padding: 4px !important;
             background-color: #7b2a19 !important;
+            border: 4px solid #7b2a19 !important;
         }
         .cypher-cell {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            border: 1px solid #7b2a19 !important;
             background-color: #f7d3a3 !important;
             color: #7b2a19 !important;
-            height: 70px !important;
+            width: 100% !important;
+            height: 100% !important;
             text-align: center !important;
             font-size: 2.2rem !important;
             font-weight: bold !important;
             line-height: 1 !important;
             overflow: hidden !important;
-            padding: 2px !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
         .q-uploader, .q-uploader__header, .q-uploader__list {
             background-color: #f7d3a3 !important;
