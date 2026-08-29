@@ -54,8 +54,10 @@ ui.add_head_html("""
             margin: 0;
             padding: 15px;
         }
-        .q-tab-panel {
+        .q-tab-panel, .q-panel {
             padding: 0 !important;
+            display: block !important;
+            height: auto !important;
         }
         .cypher-grid {
             display: grid !important;
@@ -83,6 +85,7 @@ ui.add_head_html("""
             overflow: hidden !important;
             padding: 0 !important;
             margin: 0 !important;
+            border-radius: 0 !important;
         }
         .q-uploader, .q-uploader__header, .q-uploader__list {
             background-color: #f7d3a3 !important;
