@@ -3,7 +3,7 @@ from pathlib import Path
 import lettergen
 from nicegui import app, events, ui
 
-# Get absolute path to the folder containing main.py and Tangerine-Bold.ttf
+# Get absolute path to current directory
 current_dir = Path(__file__).parent.resolve()
 app.add_static_files("/static", str(current_dir))
 
@@ -16,8 +16,8 @@ def generate_grid_data():
     lettergen.reset_lists()
 
     grid = []
-    # Row 0: Button placeholder at (0,0) + 6 symbol triplets
-    row0 = ["REGEN"] + [
+    # Row 0: Placeholder at (0,0) + 6 symbol triplets
+    row0 = ["Regenerate"] + [
         f"{symbols[i*3]} {symbols[i*3+1]} {symbols[i*3+2]}" for i in range(6)
     ]
     grid.append(row0)
@@ -35,7 +35,7 @@ def generate_grid_data():
 # Set Quasar theme primary color
 ui.colors(primary="#7b2a19")
 
-# Define local font and layout CSS rules
+# Define local font and rigid CSS grid layout
 ui.add_head_html("""
     <style>
         @font-face {
@@ -46,7 +46,7 @@ ui.add_head_html("""
         }
         * {
             font-family: 'TangerineLocal', cursive, sans-serif !important;
-            box-sizing: border-box;
+            box-sizing: border-box !important;
         }
         body {
             background-color: #f7d3a3;
@@ -57,7 +57,6 @@ ui.add_head_html("""
         .q-tab-panel, .q-panel {
             padding: 0 !important;
             display: block !important;
-            height: auto !important;
         }
         .cypher-grid {
             display: grid !important;
@@ -77,7 +76,8 @@ ui.add_head_html("""
             background-color: #f7d3a3 !important;
             color: #7b2a19 !important;
             width: 100% !important;
-            height: 100% !important;
+            height: 70px !important;
+            max-height: 70px !important;
             text-align: center !important;
             font-size: 2.2rem !important;
             font-weight: bold !important;
@@ -85,7 +85,13 @@ ui.add_head_html("""
             overflow: hidden !important;
             padding: 0 !important;
             margin: 0 !important;
-            border-radius: 0 !important;
+            user-select: none;
+        }
+        .clickable-cell {
+            cursor: pointer !important;
+        }
+        .clickable-cell:hover {
+            background-color: #ebd0ab !important;
         }
         .q-uploader, .q-uploader__header, .q-uploader__list {
             background-color: #f7d3a3 !important;
@@ -95,9 +101,6 @@ ui.add_head_html("""
         .q-uploader__title, .q-uploader__subtitle, .q-icon {
             color: #7b2a19 !important;
             font-size: 1.8rem !important;
-        }
-        .q-btn {
-            text-transform: none !important;
         }
     </style>
 """)
@@ -121,11 +124,10 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
                 for r_idx, row in enumerate(data):
                     for c_idx, val in enumerate(row):
                         if r_idx == 0 and c_idx == 0:
-                            ui.button(
-                                "Regenerate", on_click=render_grid
-                            ).classes("cypher-cell text-xl shadow-none").props(
-                                "flat"
+                            lbl = ui.label("Regenerate").classes(
+                                "cypher-cell clickable-cell text-xl"
                             )
+                            lbl.on("click", render_grid)
                         else:
                             ui.label(val).classes("cypher-cell")
 
