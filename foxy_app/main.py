@@ -93,14 +93,17 @@ ui.add_head_html("""
         .clickable-cell:hover {
             background-color: #ebd0ab !important;
         }
-        .q-uploader, .q-uploader__header, .q-uploader__list {
+        .q-uploader {
             background-color: #f7d3a3 !important;
             color: #7b2a19 !important;
             border: 1px solid #7b2a19 !important;
+            border-radius: 4px !important;
         }
-        .q-uploader__title, .q-uploader__subtitle, .q-icon {
-            color: #7b2a19 !important;
-            font-size: 1.8rem !important;
+        .q-uploader__header-content, .q-uploader__list {
+            display: none !important;
+        }
+        .q-btn {
+            text-transform: none !important;
         }
     </style>
 """)
@@ -149,8 +152,10 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
 
         with ui.row().classes("mt-4 gap-4 items-center"):
             ui.upload(
-                on_upload=handle_upload, auto_upload=True, label="Import File"
-            ).classes("bg-[#f7d3a3] text-[#7b2a19] text-xl")
+                on_upload=handle_upload, auto_upload=True, label="+"
+            ).props('flat bordered icon="add"').classes(
+                "bg-[#f7d3a3] text-[#7b2a19] text-3xl h-12 w-12 flex items-center justify-center p-0"
+            )
 
             ui.button("Export File", on_click=trigger_download).classes(
                 "bg-[#f7d3a3] text-[#7b2a19] border border-[#7b2a19] font-bold h-12 px-4 text-xl shadow-none"
