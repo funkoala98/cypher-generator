@@ -35,7 +35,7 @@ def generate_grid_data():
 # Set Quasar theme primary color
 ui.colors(primary="#7b2a19")
 
-# Define local font and rigid CSS grid layout
+# Define local font and layout CSS rules
 ui.add_head_html("""
     <style>
         @font-face {
@@ -98,8 +98,22 @@ ui.add_head_html("""
             color: #7b2a19 !important;
             border: 1px solid #7b2a19 !important;
             border-radius: 4px !important;
+            min-height: unset !important;
+            height: 48px !important;
+            width: 48px !important;
+            overflow: hidden !important;
         }
-        .q-uploader__header-content, .q-uploader__list {
+        .q-uploader__header {
+            background-color: #f7d3a3 !important;
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+        }
+        .q-uploader__header-content {
+            padding: 0 !important;
+            justify-content: center !important;
+        }
+        .q-uploader__title, .q-uploader__subtitle, .q-uploader__list {
             display: none !important;
         }
         .q-btn {
@@ -152,9 +166,9 @@ with ui.tab_panels(tabs, value=tab1).classes("w-full bg-[#f7d3a3]"):
 
         with ui.row().classes("mt-4 gap-4 items-center"):
             ui.upload(
-                on_upload=handle_upload, auto_upload=True, label="+"
+                on_upload=handle_upload, auto_upload=True
             ).props('flat bordered icon="add"').classes(
-                "bg-[#f7d3a3] text-[#7b2a19] text-3xl h-12 w-12 flex items-center justify-center p-0"
+                "bg-[#f7d3a3] text-[#7b2a19]"
             )
 
             ui.button("Export File", on_click=trigger_download).classes(
